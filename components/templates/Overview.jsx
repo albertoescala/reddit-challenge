@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CardList, Content, Button } from '../index';
+import { CardList, Content, Button, UserInfo } from '../index';
 import styled from '@emotion/styled';
 import { mq } from '../../utils/breakpoints';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -33,12 +33,18 @@ const StyledButton = styled(Button)`
 const ContentContainer = styled.div`
   width: 75%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
   ${mq[0]} {
     width: 75%;
   }
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
 `;
 
 const Overview = () => {
@@ -51,14 +57,16 @@ const Overview = () => {
     <Container>
       <ListContainer>
         <CardList data={payload || []} isOpen={isOpen} />
-        
       </ListContainer>
       <ContentContainer>
+        <HeaderContainer>
+          <UserInfo />
+          <StyledButton
+            text={<AiOutlineMenu />}
+            onClick={() => setIsOpen(!isOpen)}
+          />
+        </HeaderContainer>
         <Content />
-        <StyledButton
-          text={<AiOutlineMenu />}
-          onClick={() => setIsOpen(!isOpen)}
-        />
       </ContentContainer>
     </Container>
   )

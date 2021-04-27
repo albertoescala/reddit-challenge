@@ -1,4 +1,4 @@
-import { FETCH_POSTS_SUCCESS, SET_CODE, SET_TOKEN } from './constants';
+import { FETCH_POSTS_SUCCESS, SET_CODE, SET_TOKEN, FETCH_USER } from './constants';
 
 export const reducers = (state, action) => {
   switch (action.type) {
@@ -21,6 +21,11 @@ export const reducers = (state, action) => {
           ...state.auth,
           code: action.data,
         },
+      };
+    case FETCH_USER:
+      return {
+        ...state,
+        user: action.data
       };
     default:
       return state;

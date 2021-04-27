@@ -1,4 +1,4 @@
-import { SET_TOKEN, SET_CODE } from './constants';
+import { SET_TOKEN, SET_CODE, FETCH_USER } from './constants';
 
 export function setToken(data) {
   return {
@@ -12,4 +12,11 @@ export function setCode(data) {
     type: SET_CODE,
     data,
   };
+}
+
+export function setUser(data) {
+  return {
+    type: FETCH_USER,
+    data,
+  }
 }

@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { store } from './store';
 import { FETCH_POSTS_SUCCESS, FETCH_POSTS_FAIL } from './constants';
-import { setToken } from './actions';
+import { setUser, setToken } from './actions';
 
+const REDDIT_API = process.env.NEXT_PUBLIC_REDDIT_API;
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
 const SECRET_ID = process.env.NEXT_PUBLIC_SECRET_ID;
 const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
@@ -39,3 +41,18 @@ export const getToken = (code) => async (dispatch) => {
     )
     .then((res) => dispatch(setToken(res.data)));
 };
+
+export const getUser = () => async (dispatch) => {
+  const token = store.getState().auth.token;
+
+  return await axios
+    .get(
+      `${REDDIT_API}/api/v1/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => dispatch(setUser(res.data)));
+}

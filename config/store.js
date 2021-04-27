@@ -5,7 +5,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { reducers } from './reducers';
 
-let store;
+export let store;
 
 const initialState = {
   payload: '',
@@ -13,7 +13,8 @@ const initialState = {
     token: '',
     refresh_token: '',
     code: '',
-  }
+  },
+  user: {},
 };
 
 const middlewares = [thunk];
@@ -21,7 +22,6 @@ const middlewares = [thunk];
 const persistConfig = {
   key: 'primary',
   storage,
-  whitelist: ['auth'],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)
