@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CardList, Content, Button, UserInfo } from '../index';
+import { CardList, Content, Button, UserInfo, Details } from '../index';
 import styled from '@emotion/styled';
 import { mq } from '../../utils/breakpoints';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -67,6 +67,7 @@ const Overview = () => {
           />
         </HeaderContainer>
         <Content />
+        <Details />
       </ContentContainer>
     </Container>
   )
