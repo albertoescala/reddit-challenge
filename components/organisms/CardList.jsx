@@ -4,7 +4,7 @@ const CardList = ({ data = [] }) => {
   return (
     <div>
       {data.map(({ data }) => (
-        <Card {...data} />
+        <Card key={data.id} {...data} />
       ))}
     </div>
   );

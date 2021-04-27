@@ -1,11 +1,14 @@
+import { useSelector } from 'react-redux';
 import { CardList, Content } from '../index';
-import mock from '../../mock.json';
 
 const Overview = () => {
+  const { payload } = useSelector((state) => ({
+  payload: state.payload,
+}))
   return (
     <div>
       <div>
-        <CardList data={mock.data.children} />
+        <CardList data={payload || []} />
       </div>
       <div>
         <Content />
