@@ -3,8 +3,8 @@ import { Card } from '../index';
 const CardList = ({ data = [] }) => {
   return (
     <div>
-      {data.map(() => (
-        <Card />
+      {data.map(({ data }) => (
+        <Card {...data} />
       ))}
     </div>
   );
