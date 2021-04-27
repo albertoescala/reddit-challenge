@@ -1,19 +1,66 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CardList, Content } from '../index';
+import { CardList, Content, Button } from '../index';
+import styled from '@emotion/styled';
+import { mq } from '../../utils/breakpoints';
+import { AiOutlineMenu } from 'react-icons/ai';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const ListContainer = styled.div`
+  width: 25%;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  ${mq[0]} {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  display: block;
+  z-index: 199;
+  position: relative;
+  ${mq[0]} {
+    display: none;
+  }
+`;
+
+const ContentContainer = styled.div`
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  ${mq[0]} {
+    width: 75%;
+  }
+`;
 
 const Overview = () => {
+  const [isOpen, setIsOpen] = useState(true);
   const { payload } = useSelector((state) => ({
-  payload: state.payload,
-}))
+    payload: state.payload,
+  }));
+
   return (
-    <div>
-      <div>
-        <CardList data={payload || []} />
-      </div>
-      <div>
+    <Container>
+      <ListContainer>
+        <CardList data={payload || []} isOpen={isOpen} />
+        
+      </ListContainer>
+      <ContentContainer>
         <Content />
-      </div>
-    </div>
+        <StyledButton
+          text={<AiOutlineMenu />}
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      </ContentContainer>
+    </Container>
   )
 }
 

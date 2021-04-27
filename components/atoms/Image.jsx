@@ -1,5 +1,5 @@
 const Image = ({...props}) => {
-  return <image {...props} />
+  return <img {...props} />
 }
 
 export default Image;

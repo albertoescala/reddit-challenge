@@ -1,6 +1,6 @@
-const Title = ({ text }) => {
+const Title = ({ text, ...props }) => {
   return (
-    <h1>{text}</h1>
+    <h1 {...props}>{text}</h1>
   )
 }
 

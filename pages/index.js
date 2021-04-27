@@ -24,7 +24,7 @@ export default function Home() {
 
   const login = () => {
     return (
-      router.push('https://www.reddit.com/api/v1/authorize?client_id=client_id&response_type=code&state=SUCCESS&redirect_uri=http%3A%2F%2Fwww.localhost%3A3000&duration=permanent&scope=read+save+history')
+      router.push('https://www.reddit.com/api/v1/authorize?client_id=MdbyYB3PGaHF9g&response_type=code&state=SUCCESS&redirect_uri=http%3A%2F%2Fwww.localhost%3A3000&duration=permanent&scope=read+save+history')
     )
   }
 
