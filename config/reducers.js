@@ -1,6 +1,6 @@
 import { FETCH_POSTS_SUCCESS, SET_CODE, SET_TOKEN } from './constants';
 
-export const counterReducer = (state, action) => {
+export const reducers = (state, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
       return { ...state, payload: action.payload };

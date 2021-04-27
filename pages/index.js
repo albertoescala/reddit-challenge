@@ -20,7 +20,7 @@ export default function Home() {
       }
     }
     dispatch(fetchTopPosts(token))
-  }, [code, stateCode])
+  }, [code])
 
   const login = () => {
     return (

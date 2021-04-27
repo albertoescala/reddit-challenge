@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { counterReducer } from './reducers';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { reducers } from './reducers';
 
 let store;
 
@@ -16,9 +18,17 @@ const initialState = {
 
 const middlewares = [thunk];
 
+const persistConfig = {
+  key: 'primary',
+  storage,
+  whitelist: ['auth'],
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers)
+
 function initStore(preloadedState = initialState) {
   return createStore(
-    counterReducer,
+    persistedReducer,
     preloadedState,
     applyMiddleware(...middlewares)
   );

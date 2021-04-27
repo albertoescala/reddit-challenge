@@ -24,7 +24,7 @@ export const getToken = (code) => async (dispatch) => {
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
-            `${"cliente_id"}:${"secret_id"}`
+            `${"client_id"}:${"secret_id"}`
           ).toString("base64")}`,
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
