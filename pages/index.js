@@ -5,6 +5,10 @@ import { fetchTopPosts, getToken } from '../config/services';
 import { Overview, Button } from '../components';
 import { useRouter } from 'next/router';
 
+const REDDIT_HOST = process.env.NEXT_PUBLIC_REDDIT_HOST;
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
+const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
+
 export default function Home() {
   const token = useSelector((state) => state.auth.access_token);
   const stateCode = useSelector((state) => state.auth.code);
@@ -24,7 +28,7 @@ export default function Home() {
 
   const login = () => {
     return (
-      router.push('https://www.reddit.com/api/v1/authorize?client_id=MdbyYB3PGaHF9g&response_type=code&state=SUCCESS&redirect_uri=http%3A%2F%2Fwww.localhost%3A3000&duration=permanent&scope=read+save+history')
+      router.push(`${REDDIT_HOST}/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=SUCCESS&redirect_uri=${CALLBACK_URI}&duration=permanent&scope=read+save+history`)
     )
   }
 

@@ -2,6 +2,10 @@ import axios from 'axios';
 import { FETCH_POSTS_SUCCESS, FETCH_POSTS_FAIL } from './constants';
 import { setToken } from './actions';
 
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
+const SECRET_ID = process.env.NEXT_PUBLIC_SECRET_ID;
+const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
+
 export const fetchTopPosts = () => (dispatch) => {
   const redditUrl = "https://www.reddit.com/top.json";
 
@@ -20,11 +24,11 @@ export const getToken = (code) => async (dispatch) => {
   return axios
     .post(
       "https://www.reddit.com/api/v1/access_token",
-      `grant_type=authorization_code&code=${code}&redirect_uri=http://www.localhost:3000`,
+      `grant_type=authorization_code&code=${code}&redirect_uri=${CALLBACK_URI}`,
       {
         headers: {
           Authorization: `Basic ${Buffer.from(
-            `${"MdbyYB3PGaHF9g"}:${"6WKfjCWP7h_gndv3VvATNq-lL0tqdg"}`
+            `${CLIENT_ID}:${SECRET_ID}`
           ).toString("base64")}`,
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
