@@ -14,6 +14,7 @@ const ListContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   position: absolute;
+  height: 100vh;
   ${mq[0]} {
     width: 25%;
     display: flex;
@@ -51,14 +52,12 @@ const HeaderContainer = styled.div`
 
 const Overview = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const { payload } = useSelector((state) => ({
-    payload: state.payload,
-  }));
+  const payload = useSelector((state) => state.payload || []);
 
   return (
     <Container>
       <ListContainer>
-        <CardList data={payload || []} isOpen={isOpen} />
+        {payload.length > 0 && <CardList data={payload} isOpen={isOpen} />}
       </ListContainer>
       <ContentContainer>
         <HeaderContainer>
