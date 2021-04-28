@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react'
-import { Provider } from 'react-redux'
-import { useStore } from '../config/store'
-import { persistStore } from 'redux-persist'
-import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import { useStore } from '../config/store';
 
 export default function App({ Component, pageProps }) {
-  const store = useStore(pageProps.initialReduxState)
+  const store = useStore(pageProps.initialReduxState);
   const persistor = persistStore(store, {}, function () {
-    persistor.persist()
+    persistor.persist();
   });
 
   return (
@@ -16,5 +15,5 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </PersistGate>
     </Provider>
-  )
+  );
 }

@@ -26,9 +26,9 @@ const middlewares = [thunk];
 const persistConfig = {
   key: 'primary',
   storage,
-}
+};
 
-const persistedReducer = persistReducer(persistConfig, reducers)
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 function initStore(preloadedState = initialState) {
   return createStore(
@@ -50,8 +50,7 @@ export const initializeStore = (preloadedState) => {
     store = undefined;
   }
 
-
-  if (typeof window === "undefined") return _store;
+  if (typeof window === 'undefined') return _store;
 
   if (!store) store = _store;
 

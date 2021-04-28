@@ -10,19 +10,16 @@ import {
 } from './constants';
 
 const removeDuplicate = (array) => {
-  return array.filter((value, index) => array.indexOf(value) === index)
-}
+  return array.filter((value, index) => array.indexOf(value) === index);
+};
 
 export const reducers = (state, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
       return {
         ...state,
-        posts: [
-          ...state.posts,
-          ...action.posts,
-        ],
-        hasMorePostsId: action.hasMorePostsId
+        posts: [...state.posts, ...action.posts],
+        hasMorePostsId: action.hasMorePostsId,
       };
     case SET_TOKEN:
       return {
@@ -45,7 +42,7 @@ export const reducers = (state, action) => {
     case FETCH_USER:
       return {
         ...state,
-        user: action.data
+        user: action.data,
       };
     case SET_POST:
       return {
@@ -55,18 +52,12 @@ export const reducers = (state, action) => {
     case SET_POST_VISITED:
       return {
         ...state,
-        postsVisited: removeDuplicate([
-          ...state.postsVisited,
-          action.id,
-        ]),
+        postsVisited: removeDuplicate([...state.postsVisited, action.id]),
       };
     case SET_POST_DISMISSED:
       return {
         ...state,
-        postsDismissed: removeDuplicate([
-          ...state.postsDismissed,
-          action.id,
-        ]),
+        postsDismissed: removeDuplicate([...state.postsDismissed, action.id]),
       };
     case SET_ALL_POSTS_DISMISSED:
       return {

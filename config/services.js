@@ -9,7 +9,9 @@ const SECRET_ID = process.env.NEXT_PUBLIC_SECRET_ID;
 const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
 
 export const fetchTopPosts = (nextPageId) => (dispatch) => {
-  const redditUrl = `https://www.reddit.com/top.json?limit=10${nextPageId ? `&after=${nextPageId}` : ''}`;
+  const redditUrl = `https://www.reddit.com/top.json?limit=10${
+    nextPageId ? `&after=${nextPageId}` : ''
+  }`;
 
   fetch(redditUrl)
     .then((res) => res.json())
@@ -47,13 +49,10 @@ export const getUser = () => async (dispatch) => {
   const token = store.getState().auth.token;
 
   return await axios
-    .get(
-      `${REDDIT_API}/api/v1/me`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    .get(`${REDDIT_API}/api/v1/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     .then((res) => dispatch(setUser(res.data)));
-}
+};
