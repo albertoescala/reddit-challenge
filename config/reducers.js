@@ -8,6 +8,10 @@ import {
   SET_POST_DISMISSED,
 } from './constants';
 
+const removeDuplicate = (array) => {
+  return array.filter((value, index) => array.indexOf(value) === index)
+}
+
 export const reducers = (state, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
@@ -43,18 +47,18 @@ export const reducers = (state, action) => {
     case SET_POST_VISITED:
       return {
         ...state,
-        postsVisited: [
+        postsVisited: removeDuplicate([
           ...state.postsVisited,
           action.id,
-        ]
+        ]),
       };
     case SET_POST_DISMISSED:
       return {
         ...state,
-        postsDismissed: [
+        postsDismissed: removeDuplicate([
           ...state.postsDismissed,
           action.id,
-        ]
+        ]),
       };
     default:
       return state;
