@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Card } from '../index';
+import { useSelector, useDispatch } from 'react-redux';
+import { Card, Button } from '../index';
 import styled from '@emotion/styled';
 import { mq } from '../../utils/breakpoints';
+import { setAllPostsDismissed } from '../../config/actions'
 
 const Container = styled.div`
-  opacity: ${props => props.isOpen ? '0' : '1'};
-  transform: ${props => props.isOpen ? 'translateX(-100px)' : 'translateX(0px)'};
+  transform: ${props => props.isOpen ? 'translateX(-500px)' : 'translateX(0px)'};
   position: absolute;
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  background-color: lightgreen;
-  width: 100%;
   transition: all .5s;
+  height: 100vh;
+  width: 100%;
+  background-color: lightgreen;
   ${mq[0]} {
     position: relative;
     display: flex;
@@ -23,9 +21,28 @@ const Container = styled.div`
   }
 `
 
+const ListContainer = styled.div`
+  opacity: ${props => props.isDismissed ? '0' : '1'};
+  transform: ${props => props.isDismissed ? 'translateX(-100px)' : 'translateX(0px)'};
+  width: 100%;
+  transition: all .5s;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  width: 100%;
+  transition: all .5s;
+  ${mq[0]} {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 const CardList = ({ data = [], isOpen }) => {
   const [cards, setCards] = useState(data);
+  const [isDismissed, setIsDismissed] = useState(false);
   const postsDismissed = useSelector((state) => state.postsDismissed);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setCards(renderCard())
@@ -40,9 +57,27 @@ const CardList = ({ data = [], isOpen }) => {
     })
   }
 
+  const dismissPosts = () => {
+    setIsDismissed(true)
+    dispatch(setAllPostsDismissed(data.map(({ data: { id }}) => id)))
+  }
+
   return (
     <Container isOpen={isOpen}>
-      {cards.map(({ data }) => <Card key={data.id} {...data} />)}
+      <ListContainer isDismissed={isDismissed}>
+        {cards.map(({ data }) => <Card key={data.id} {...data} />)}
+      </ListContainer>
+      <Button
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: '100%'
+        }}
+        text="Delete all"
+        onClick={() => dismissPosts()}
+      />
     </Container>
   );
 }

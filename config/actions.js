@@ -5,6 +5,7 @@ import {
   SET_POST,
   SET_POST_VISITED,
   SET_POST_DISMISSED,
+  SET_ALL_POSTS_DISMISSED,
 } from './constants';
 
 export function setToken(data) {
@@ -46,5 +47,12 @@ export function setPostDismissed(id) {
   return {
     type: SET_POST_DISMISSED,
     id,
+  };
+}
+
+export function setAllPostsDismissed(ids) {
+  return {
+    type: SET_ALL_POSTS_DISMISSED,
+    ids,
   };
 }

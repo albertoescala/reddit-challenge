@@ -6,6 +6,7 @@ import {
   SET_POST,
   SET_POST_VISITED,
   SET_POST_DISMISSED,
+  SET_ALL_POSTS_DISMISSED,
 } from './constants';
 
 const removeDuplicate = (array) => {
@@ -58,6 +59,14 @@ export const reducers = (state, action) => {
         postsDismissed: removeDuplicate([
           ...state.postsDismissed,
           action.id,
+        ]),
+      };
+    case SET_ALL_POSTS_DISMISSED:
+      return {
+        ...state,
+        postsDismissed: removeDuplicate([
+          ...state.postsDismissed,
+          ...action.ids,
         ]),
       };
     default:

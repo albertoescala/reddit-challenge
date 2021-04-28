@@ -6,15 +6,18 @@ import { setPost, setPostVisited, setPostDismissed } from '../../config/actions'
 import { useState } from 'react';
 
 const Container = styled.div`
-  border: 1px solid gray;
+  opacity: ${props => !props.isShowed ? '0' : '1'};
+  transform: ${props => !props.isShowed ? 'translateX(-100px)' : 'translateX(0px)'};
+  transition: all .5s;
+`;
+
+const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  opacity: ${props => !props.isShowed ? '0' : '1'};
-  transform: ${props => !props.isShowed ? 'translateX(-100px)' : 'translateX(0px)'};
   position: ${props => !props.isShowed ? 'absolute' : 'relative'};
-  transition: all .5s;
+  transition: position 3s 50s;
 `;
 
 const PreviewContainer = styled.div`
@@ -65,28 +68,30 @@ const Card = ({ author, created, thumbnail, title, num_comments, score, id }) =>
 
   return (
     <Container isShowed={isShowed}>
-      <PreviewContainer>
+      <CardContent isShowed={isShowed}>
+        <PreviewContainer>
+          <div onClick={() => setDetails()}>
+            <BlockContainer>
+              <div style={{ display: 'flex', position: 'relative' }}>
+                {renderStatus()}
+                <Label text={author} />
+              </div>
+              <Label text={`${moment.unix(created).fromNow()}`} />
+            </BlockContainer>
+            <BlockContainer>
+              {thumbnail !== 'default' && <Image src={thumbnail} width="50" height="50" />}
+              <Label text={title} />
+            </BlockContainer>
+          </div>
+          <BlockContainer>
+            <Button text="Dismiss Post" onClick={() => dismissPost()} />
+            <Label text={`${num_comments} comments`} />
+          </BlockContainer>
+        </PreviewContainer>
         <div onClick={() => setDetails()}>
-          <BlockContainer>
-            <div style={{ display: 'flex', position: 'relative' }}>
-              {renderStatus()}
-              <Label text={author} />
-            </div>
-            <Label text={`${moment.unix(created).fromNow()}`} />
-          </BlockContainer>
-          <BlockContainer>
-            {thumbnail !== 'default' && <Image src={thumbnail} width="50" height="50" />}
-            <Label text={title} />
-          </BlockContainer>
+          <Label text=">" style={{ fontSize: '30px', padding: '0 15px' }} />
         </div>
-        <BlockContainer>
-          <Button text="Dismiss Post" onClick={() => dismissPost()} />
-          <Label text={`${num_comments} comments`} />
-        </BlockContainer>
-      </PreviewContainer>
-      <div>
-        <Label text=">" style={{ fontSize: '30px', padding: '0 15px' }} />
-      </div>
+      </CardContent>
     </Container>
   )
 };
