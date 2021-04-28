@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import { Button, Label, Image } from '../index';
-import { setPost } from '../../config/actions'
+import { setPost, setPostVisited } from '../../config/actions'
 
 const Container = styled.div`
   border: 1px solid gray;
@@ -26,19 +26,45 @@ const BlockContainer = styled.div`
   position: relative;
 `;
 
-const Card = ({ author, created, thumbnail, title, num_comments, score }) => {
+const VisitedStatus = styled.div`
+  width: 2px;
+  height: 2px;
+  padding: 5px;
+  background-color: lightblue;
+  border-radius: 100%;
+  position: absolute;
+`;
+
+const Card = ({ author, created, thumbnail, title, num_comments, score, id }) => {
+  const postsVisited = useSelector((state) => state.postsVisited)
   const dispatch = useDispatch();
+
+  const setDetails = () => {
+    dispatch(setPost({ author, thumbnail, title, score }));
+    dispatch(setPostVisited(id));
+  }
+
+  const renderStatus = () => {
+    const isVisited = postsVisited.find((postId) => postId === id);
+    if (!isVisited) {
+      return <VisitedStatus />
+    }
+    return;
+  }
 
   return (
     <Container>
       <PreviewContainer>
-        <div onClick={() => dispatch(setPost({ author, thumbnail, title, score }))}>
+        <div onClick={() => setDetails()}>
           <BlockContainer>
-            <Label text={author} />
+            <div style={{ display: 'flex', position: 'relative' }}>
+              {renderStatus()}
+              <Label text={author} />
+            </div>
             <Label text={`${moment.unix(created).fromNow()}`} />
           </BlockContainer>
           <BlockContainer>
-            <Image src={thumbnail} width="50" height="50" />
+            {thumbnail !== 'default' && <Image src={thumbnail} width="50" height="50" />}
             <Label text={title} />
           </BlockContainer>
         </div>

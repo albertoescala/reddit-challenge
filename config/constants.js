@@ -8,3 +8,4 @@ export const SET_TOKEN = 'SET_TOKEN';
 export const SET_CODE = 'SET_CODE';
 
 export const SET_POST = 'SET_POST';
+export const SET_POST_VISITED = 'SET_POST_VISITED';

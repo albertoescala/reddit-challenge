@@ -16,6 +16,7 @@ const initialState = {
   },
   user: {},
   postSelected: {},
+  postsVisited: [],
 };
 
 const middlewares = [thunk];

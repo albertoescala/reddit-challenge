@@ -7,7 +7,7 @@ const Details = () => {
   return (
     <div>
       <Label text={postSelected.title} />
-      <Image src={postSelected.thumbnail} width="100" height="100" />
+      {postSelected.thumbnail !== 'default' && <Image src={postSelected.thumbnail} width="100" height="100" />}
       <Label text={`${postSelected.score} Points`} />
     </div>
   );

@@ -1,4 +1,11 @@
-import { FETCH_POSTS_SUCCESS, SET_CODE, SET_TOKEN, FETCH_USER, SET_POST } from './constants';
+import {
+  FETCH_POSTS_SUCCESS,
+  SET_CODE,
+  SET_TOKEN,
+  FETCH_USER,
+  SET_POST,
+  SET_POST_VISITED,
+} from './constants';
 
 export const reducers = (state, action) => {
   switch (action.type) {
@@ -31,6 +38,14 @@ export const reducers = (state, action) => {
       return {
         ...state,
         postSelected: action.data,
+      };
+    case SET_POST_VISITED:
+      return {
+        ...state,
+        postsVisited: [
+          ...state.postsVisited,
+          action.id,
+        ]
       }
     default:
       return state;
