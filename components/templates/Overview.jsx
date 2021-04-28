@@ -4,6 +4,7 @@ import { CardList, Content, Button, UserInfo, Details } from '../index';
 import styled from '@emotion/styled';
 import { mq } from '../../utils/breakpoints';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   display: flex;
@@ -50,9 +51,21 @@ const HeaderContainer = styled.div`
   width: 100%;
 `;
 
+const REDDIT_HOST = process.env.NEXT_PUBLIC_REDDIT_HOST;
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
+const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
+
 const Overview = () => {
   const [isOpen, setIsOpen] = useState(true);
   const payload = useSelector((state) => state.payload || []);
+  const stateUser = useSelector((state) => state.user);
+  const router = useRouter();
+
+  const login = () => {
+    return (
+      router.push(`${REDDIT_HOST}/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=SUCCESS&redirect_uri=${CALLBACK_URI}&duration=permanent&scope=read+save+history+identity`)
+    )
+  }
 
   return (
     <Container>
@@ -61,7 +74,8 @@ const Overview = () => {
       </ListContainer>
       <ContentContainer>
         <HeaderContainer>
-          <UserInfo />
+          {stateUser && <UserInfo />}
+          {!stateUser.name && <Button text="Login" onClick={() => login()} />}
           <StyledButton
             text={<AiOutlineMenu />}
             onClick={() => setIsOpen(!isOpen)}
