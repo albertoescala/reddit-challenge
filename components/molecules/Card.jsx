@@ -2,7 +2,8 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import { Button, Label, Image } from '../index';
-import { setPost, setPostVisited } from '../../config/actions'
+import { setPost, setPostVisited, setPostDismissed } from '../../config/actions'
+import { useState } from 'react';
 
 const Container = styled.div`
   border: 1px solid gray;
@@ -10,6 +11,10 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  opacity: ${props => !props.isShowed ? '0' : '1'};
+  transform: ${props => !props.isShowed ? 'translateX(-100px)' : 'translateX(0px)'};
+  position: ${props => !props.isShowed ? 'absolute' : 'relative'};
+  transition: all .5s;
 `;
 
 const PreviewContainer = styled.div`
@@ -36,6 +41,7 @@ const VisitedStatus = styled.div`
 `;
 
 const Card = ({ author, created, thumbnail, title, num_comments, score, id }) => {
+  const [isShowed, setIsShowed] = useState(true)
   const postsVisited = useSelector((state) => state.postsVisited)
   const dispatch = useDispatch();
 
@@ -52,8 +58,13 @@ const Card = ({ author, created, thumbnail, title, num_comments, score, id }) =>
     return;
   }
 
+  const dismissPost = () => {
+    setIsShowed(false)
+    dispatch(setPostDismissed(id))
+  }
+
   return (
-    <Container>
+    <Container isShowed={isShowed}>
       <PreviewContainer>
         <div onClick={() => setDetails()}>
           <BlockContainer>
@@ -69,7 +80,7 @@ const Card = ({ author, created, thumbnail, title, num_comments, score, id }) =>
           </BlockContainer>
         </div>
         <BlockContainer>
-          <Button text="Dismiss Post" onClick={() => console.log('AEA')} />
+          <Button text="Dismiss Post" onClick={() => dismissPost()} />
           <Label text={`${num_comments} comments`} />
         </BlockContainer>
       </PreviewContainer>

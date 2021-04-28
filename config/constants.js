@@ -9,3 +9,4 @@ export const SET_CODE = 'SET_CODE';
 
 export const SET_POST = 'SET_POST';
 export const SET_POST_VISITED = 'SET_POST_VISITED';
+export const SET_POST_DISMISSED = 'SET_POST_DISMISSED';

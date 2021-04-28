@@ -5,6 +5,7 @@ import {
   FETCH_USER,
   SET_POST,
   SET_POST_VISITED,
+  SET_POST_DISMISSED,
 } from './constants';
 
 export const reducers = (state, action) => {
@@ -46,7 +47,15 @@ export const reducers = (state, action) => {
           ...state.postsVisited,
           action.id,
         ]
-      }
+      };
+    case SET_POST_DISMISSED:
+      return {
+        ...state,
+        postsDismissed: [
+          ...state.postsDismissed,
+          action.id,
+        ]
+      };
     default:
       return state;
   }

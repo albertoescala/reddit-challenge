@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Card } from '../index';
 import styled from '@emotion/styled';
 import { mq } from '../../utils/breakpoints';
@@ -9,6 +11,8 @@ const Container = styled.div`
   height: 100vh;
   overflow-y: scroll;
   scroll-behavior: smooth;
+  background-color: lightgreen;
+  width: 100%;
   transition: all .5s;
   ${mq[0]} {
     position: relative;
@@ -20,11 +24,25 @@ const Container = styled.div`
 `
 
 const CardList = ({ data = [], isOpen }) => {
+  const [cards, setCards] = useState(data);
+  const postsDismissed = useSelector((state) => state.postsDismissed);
+
+  useEffect(() => {
+    setCards(renderCard())
+  }, [])
+
+  const renderCard = () => {
+    return data.filter(({ data }) => {
+      const isValid = postsDismissed.find((id) => {
+        return data.id === id;
+      });
+      return !isValid;
+    })
+  }
+
   return (
     <Container isOpen={isOpen}>
-      {data.map(({ data }) => (
-        <Card key={data.id} {...data} />
-      ))}
+      {cards.map(({ data }) => <Card key={data.id} {...data} />)}
     </Container>
   );
 }

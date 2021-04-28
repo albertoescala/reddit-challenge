@@ -1,4 +1,11 @@
-import { SET_TOKEN, SET_CODE, FETCH_USER, SET_POST, SET_POST_VISITED } from './constants';
+import {
+  SET_TOKEN,
+  SET_CODE,
+  FETCH_USER,
+  SET_POST,
+  SET_POST_VISITED,
+  SET_POST_DISMISSED,
+} from './constants';
 
 export function setToken(data) {
   return {
@@ -31,6 +38,13 @@ export function setPost(data) {
 export function setPostVisited(id) {
   return {
     type: SET_POST_VISITED,
+    id,
+  };
+}
+
+export function setPostDismissed(id) {
+  return {
+    type: SET_POST_DISMISSED,
     id,
   };
 }
