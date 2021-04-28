@@ -7,7 +7,7 @@ import { reducers } from './reducers';
 
 export let store;
 
-const initialState = {
+export const initialState = {
   posts: '',
   hasMorePostsId: '',
   auth: {

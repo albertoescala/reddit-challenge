@@ -25,14 +25,17 @@ export default function Home() {
         dispatch(getUser());
       }
     }
+  }, [code, token]);
+
+  useEffect(() => {
     if (posts.length === 0) {
       dispatch(fetchTopPosts());
     }
-  }, []);
+  }, [])
 
   return (
-    <>
+    <div>
       <Overview />
-    </>
+    </div>
   );
 }

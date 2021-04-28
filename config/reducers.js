@@ -8,12 +8,13 @@ import {
   SET_POST_DISMISSED,
   SET_ALL_POSTS_DISMISSED,
 } from './constants';
+import { initialState } from './store';
 
 const removeDuplicate = (array) => {
   return array.filter((value, index) => array.indexOf(value) === index);
 };
 
-export const reducers = (state, action) => {
+export const reducers = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
       return {

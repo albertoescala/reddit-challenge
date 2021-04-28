@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { store } from './store';
-import { FETCH_POSTS_SUCCESS, FETCH_POSTS_FAIL } from './constants';
-import { setUser, setToken } from './actions';
+import { FETCH_POSTS_FAIL } from './constants';
+import { setPosts, setUser, setToken } from './actions';
 
 const REDDIT_API = process.env.NEXT_PUBLIC_REDDIT_API;
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
@@ -13,14 +13,9 @@ export const fetchTopPosts = (nextPageId) => (dispatch) => {
     nextPageId ? `&after=${nextPageId}` : ''
   }`;
 
-  fetch(redditUrl)
-    .then((res) => res.json())
-    .then((data) => {
-      return dispatch({
-        type: FETCH_POSTS_SUCCESS,
-        posts: data.data.children,
-        hasMorePostsId: data.data.after,
-      });
+  axios.get(redditUrl)
+    .then(({ data }) => {
+      return dispatch(setPosts(data));
     })
     .catch((err) => dispatch({ type: FETCH_POSTS_FAIL, posts: err }));
 };

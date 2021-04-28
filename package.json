@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "@emotion/react": "^11.1.5",
@@ -27,5 +29,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
