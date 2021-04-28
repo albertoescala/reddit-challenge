@@ -8,18 +8,19 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
 const SECRET_ID = process.env.NEXT_PUBLIC_SECRET_ID;
 const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
 
-export const fetchTopPosts = () => (dispatch) => {
-  const redditUrl = "https://www.reddit.com/top.json";
+export const fetchTopPosts = (nextPageId) => (dispatch) => {
+  const redditUrl = `https://www.reddit.com/top.json?limit=10${nextPageId ? `&after=${nextPageId}` : ''}`;
 
   fetch(redditUrl)
     .then((res) => res.json())
     .then((data) => {
       return dispatch({
         type: FETCH_POSTS_SUCCESS,
-        payload: data.data.children,
+        posts: data.data.children,
+        hasMorePostsId: data.data.after,
       });
     })
-    .catch((err) => dispatch({ type: FETCH_POSTS_FAIL, payload: err }));
+    .catch((err) => dispatch({ type: FETCH_POSTS_FAIL, posts: err }));
 };
 
 export const getToken = (code) => async (dispatch) => {

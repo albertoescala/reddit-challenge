@@ -8,7 +8,8 @@ import { reducers } from './reducers';
 export let store;
 
 const initialState = {
-  payload: '',
+  posts: '',
+  hasMorePostsId: '',
   auth: {
     token: '',
     refresh_token: '',

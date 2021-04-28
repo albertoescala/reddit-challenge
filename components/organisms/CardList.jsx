@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Button } from '../index';
 import styled from '@emotion/styled';
 import { mq } from '../../utils/breakpoints';
-import { setAllPostsDismissed } from '../../config/actions'
+import { setAllPostsDismissed } from '../../config/actions';
+import { fetchTopPosts } from '../../config/services';
 
 const Container = styled.div`
   transform: ${props => props.isOpen ? 'translateX(-500px)' : 'translateX(0px)'};
@@ -38,18 +39,24 @@ const ListContainer = styled.div`
   }
 `;
 
-const CardList = ({ data = [], isOpen }) => {
-  const [cards, setCards] = useState(data);
+const CardList = ({ isOpen }) => {
+  const [cards, setCards] = useState([]);
   const [isDismissed, setIsDismissed] = useState(false);
   const postsDismissed = useSelector((state) => state.postsDismissed);
+  const posts = useSelector((state) => state.posts || []);
+  const hasMorePostsId = useSelector((state) => state.hasMorePostsId);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setCards(renderCard())
   }, [])
 
+  useEffect(() => {
+    setCards(renderCard())
+  }, [posts])
+
   const renderCard = () => {
-    return data.filter(({ data }) => {
+    return posts.filter(({ data }) => {
       const isValid = postsDismissed.find((id) => {
         return data.id === id;
       });
@@ -59,7 +66,11 @@ const CardList = ({ data = [], isOpen }) => {
 
   const dismissPosts = () => {
     setIsDismissed(true)
-    dispatch(setAllPostsDismissed(data.map(({ data: { id }}) => id)))
+    dispatch(setAllPostsDismissed(cards.map(({ data: { id }}) => id)))
+  }
+
+  const loadMorePosts = () => {
+    dispatch(fetchTopPosts(hasMorePostsId))
   }
 
   return (
@@ -77,6 +88,17 @@ const CardList = ({ data = [], isOpen }) => {
         }}
         text="Delete all"
         onClick={() => dismissPosts()}
+      />
+      <Button
+        style={{
+          position: 'fixed',
+          bottom: 20,
+          left: 0,
+          right: 0,
+          width: '100%'
+        }}
+        text="Fetch more"
+        onClick={() => loadMorePosts()}
       />
     </Container>
   );

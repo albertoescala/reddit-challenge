@@ -16,7 +16,14 @@ const removeDuplicate = (array) => {
 export const reducers = (state, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
-      return { ...state, payload: action.payload };
+      return {
+        ...state,
+        posts: [
+          ...state.posts,
+          ...action.posts,
+        ],
+        hasMorePostsId: action.hasMorePostsId
+      };
     case SET_TOKEN:
       return {
         ...state,

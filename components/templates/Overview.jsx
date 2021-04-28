@@ -57,7 +57,7 @@ const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
 
 const Overview = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const payload = useSelector((state) => state.payload || []);
+  const posts = useSelector((state) => state.posts || []);
   const stateUser = useSelector((state) => state.user);
   const router = useRouter();
 
@@ -70,7 +70,7 @@ const Overview = () => {
   return (
     <Container>
       <ListContainer>
-        {payload.length > 0 && <CardList data={payload} isOpen={isOpen} />}
+        {posts.length > 0 && <CardList isOpen={isOpen} />}
       </ListContainer>
       <ContentContainer>
         <HeaderContainer>
