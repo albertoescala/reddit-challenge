@@ -3,9 +3,7 @@ import { Title, Image, Label } from '../index';
 const Content = () => {
   return (
     <div>
-      <Title text="Content" />
-      <Image />
-      <Label />
+      <Title text="REDDIT" />
     </div>
   );
 }

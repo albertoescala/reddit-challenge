@@ -34,7 +34,7 @@ export const VisitedStatus = styled.div`
   width: 2px;
   height: 2px;
   padding: 5px;
-  background-color: lightblue;
+  background-color: #13a6d2;
   border-radius: 100%;
   position: absolute;
 `;

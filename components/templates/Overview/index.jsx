@@ -34,7 +34,7 @@ const Overview = () => {
       <ContentContainer>
         <HeaderContainer>
           {user && <UserInfo />}
-          {!user.name && <Button text="Login" onClick={() => login()} />}
+          {!user.name && <Button style={{ padding: '5px 15px', fontSize: '14px' }} text="Login" onClick={() => login()} />}
           <StyledButton
             text={<AiOutlineMenu />}
             onClick={() => setIsOpen(!isOpen)}

@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
 import { mq } from '../../../utils/breakpoints';
+import { Button } from '../../index';
 
 export const Container = styled.div`
   transform: ${(props) =>
-    props.isOpen ? "translateX(-500px)" : "translateX(0px)"};
+    props.isOpen ? "translateX(-900px)" : "translateX(0px)"};
   position: absolute;
   transition: all 0.5s;
   height: 100vh;
   width: 100%;
-  background-color: lightgreen;
+  background-color: #ccc;
   ${mq[0]} {
     position: relative;
     display: flex;
@@ -28,10 +29,17 @@ export const ListContainer = styled.div`
   overflow-y: scroll;
   scroll-behavior: smooth;
   width: 100%;
-  transition: all 0.5s;
   ${mq[0]} {
     position: relative;
     display: flex;
     flex-direction: column;
   }
+`;
+
+export const StyledButton = styled(Button)`
+  padding: 10px;
+  width: 50%;
+  font-size: 15px;
+  border: 1px solid;
+  border-radius: 0;
 `;

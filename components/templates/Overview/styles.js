@@ -13,6 +13,13 @@ export const ListContainer = styled.div`
   position: absolute;
   height: 100vh;
   ${mq[0]} {
+    width: 45%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    position: relative;
+  }
+  ${mq[1]} {
     width: 25%;
     display: flex;
     flex-direction: row;
@@ -35,7 +42,12 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 10px;
+  align-items: center;
   ${mq[0]} {
+    width: 55%;
+  }
+  ${mq[1]} {
     width: 75%;
   }
 `;

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card, Button } from '../../index';
+import { Card } from '../../index';
 import { setAllPostsDismissed } from '../../../config/actions';
 import { fetchTopPosts } from '../../../config/services';
-import { Container, ListContainer } from './styles';
+import { Container, ListContainer, StyledButton } from './styles';
 
 const CardList = ({ isOpen }) => {
   const [cards, setCards] = useState([]);
@@ -19,6 +19,7 @@ const CardList = ({ isOpen }) => {
 
   useEffect(() => {
     setCards(renderCard());
+    setIsDismissed(false);
   }, [posts]);
 
   const renderCard = () => {
@@ -35,8 +36,8 @@ const CardList = ({ isOpen }) => {
     dispatch(setAllPostsDismissed(cards.map(({ data: { id } }) => id)));
   };
 
-  const loadMorePosts = () => {
-    dispatch(fetchTopPosts(hasMorePostsId));
+  const loadMorePosts = async () => {
+    await dispatch(fetchTopPosts(hasMorePostsId));
   };
 
   return (
@@ -46,28 +47,16 @@ const CardList = ({ isOpen }) => {
           <Card key={data.id} {...data} />
         ))}
       </ListContainer>
-      <Button
-        style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          width: "100%",
-        }}
-        text="Delete all"
+      <div>
+      <StyledButton
+        text="Dismiss all"
         onClick={() => dismissPosts()}
       />
-      <Button
-        style={{
-          position: "fixed",
-          bottom: 20,
-          left: 0,
-          right: 0,
-          width: "100%",
-        }}
+      <StyledButton
         text="Fetch more"
         onClick={() => loadMorePosts()}
       />
+      </div>
     </Container>
   );
 };
