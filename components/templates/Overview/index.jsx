@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CardList, Content, Button, UserInfo, Details } from '../../index';
+import { setIsMenuOpen } from '../../../config/actions';
+import { IconContext } from 'react-icons';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import {
@@ -16,9 +17,9 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
 const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
 
 const Overview = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const { posts = [], user } = useSelector((state) => state);
+  const { posts = [], user, isMenuOpen } = useSelector((state) => state);
   const router = useRouter();
+  const dispatch = useDispatch()
 
   const login = () => {
     return router.push(
@@ -29,15 +30,19 @@ const Overview = () => {
   return (
     <Container>
       <ListContainer>
-        {posts.length > 0 && <CardList isOpen={isOpen} />}
+        {posts.length > 0 && <CardList isOpen={isMenuOpen} />}
       </ListContainer>
       <ContentContainer>
         <HeaderContainer>
           {user && <UserInfo />}
           {!user.name && <Button style={{ padding: '5px 15px', fontSize: '14px' }} text="Login" onClick={() => login()} />}
           <StyledButton
-            text={<AiOutlineMenu />}
-            onClick={() => setIsOpen(!isOpen)}
+            text={
+              <IconContext.Provider value={{ size: '2em' }}>
+                <AiOutlineMenu />
+              </IconContext.Provider>
+            }
+            onClick={() => dispatch(setIsMenuOpen(!isMenuOpen))}
           />
         </HeaderContainer>
         <Content />

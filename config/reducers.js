@@ -7,6 +7,7 @@ import {
   SET_POST_VISITED,
   SET_POST_DISMISSED,
   SET_ALL_POSTS_DISMISSED,
+  SET_IS_MENU_OPEN,
 } from './constants';
 import { initialState } from './store';
 
@@ -68,6 +69,11 @@ export const reducers = (state = initialState, action) => {
           ...action.ids,
         ]),
       };
+    case SET_IS_MENU_OPEN:
+      return {
+        ...state,
+        isMenuOpen: action.isMenuOpen,
+      }
     default:
       return state;
   }

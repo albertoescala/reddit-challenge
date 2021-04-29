@@ -46,16 +46,24 @@ const CardList = ({ isOpen }) => {
         {cards.map(({ data }) => (
           <Card key={data.id} {...data} />
         ))}
+        <div style={{ paddingTop: '39px' }} />
       </ListContainer>
-      <div>
-      <StyledButton
-        text="Dismiss all"
-        onClick={() => dismissPosts()}
-      />
-      <StyledButton
-        text="Fetch more"
-        onClick={() => loadMorePosts()}
-      />
+      <div
+        style={{
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          width: "100%",
+        }}
+      >
+        <StyledButton
+          text="Dismiss all"
+          onClick={() => dismissPosts()}
+        />
+        <StyledButton
+          text="Fetch more"
+          onClick={() => loadMorePosts()}
+        />
       </div>
     </Container>
   );

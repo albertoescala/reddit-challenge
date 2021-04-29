@@ -30,8 +30,10 @@ export const ListContainer = styled.div`
 
 export const StyledButton = styled(Button)`
   display: block;
-  z-index: 199;
-  position: relative;
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  border-radius: 100%;
   ${mq[0]} {
     display: none;
   }
@@ -57,4 +59,5 @@ export const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
+  position: relative;
 `;

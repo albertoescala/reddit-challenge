@@ -10,6 +10,7 @@ export const Container = styled.div`
   height: 100vh;
   width: 100%;
   background-color: #ccc;
+  z-index: 99;
   ${mq[0]} {
     position: relative;
     display: flex;

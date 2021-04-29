@@ -19,6 +19,7 @@ export const initialState = {
   postSelected: {},
   postsVisited: [],
   postsDismissed: [],
+  isMenuOpen: false,
 };
 
 const middlewares = [thunk];

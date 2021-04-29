@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { Button, Label, Image } from '../../index';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { Label, Image } from '../../index';
 import {
   setPost,
   setPostVisited,
   setPostDismissed,
+  setIsMenuOpen,
 } from '../../../config/actions';
 import {
   Container,
@@ -13,6 +15,11 @@ import {
   PreviewContainer,
   BlockContainer,
   VisitedStatus,
+  PostTitle,
+  DismissButton,
+  AuthorLabel,
+  TimeLabel,
+  CommentLabel,
 } from './styles';
 
 const Card = ({
@@ -25,12 +32,13 @@ const Card = ({
   id,
 }) => {
   const [isShowed, setIsShowed] = useState(true);
-  const postsVisited = useSelector((state) => state.postsVisited);
+  const { postsVisited, isMenuOpen } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const setDetails = () => {
     dispatch(setPost({ author, thumbnail, title, score }));
     dispatch(setPostVisited(id));
+    dispatch(setIsMenuOpen(!isMenuOpen))
   };
 
   const renderStatus = () => {
@@ -54,20 +62,23 @@ const Card = ({
             <BlockContainer>
               <div style={{ display: "flex", position: "relative" }}>
                 {renderStatus()}
-                <Label text={author} />
+                <AuthorLabel text={author} />
               </div>
-              <Label text={`${moment.unix(created).fromNow()}`} />
+              <TimeLabel text={`${moment.unix(created).fromNow()}`} />
             </BlockContainer>
             <BlockContainer>
               {thumbnail !== "default" && (
-                <Image src={thumbnail} width="50" height="50" />
+                <Image style={{ margin: '0 0 10px 0' }} src={thumbnail} width="50" height="50" />
               )}
-              <Label text={title} />
+              <PostTitle text={title} />
             </BlockContainer>
           </div>
           <BlockContainer>
-            <Button text="Dismiss Post" onClick={() => dismissPost()} />
-            <Label text={`${num_comments} comments`} />
+            <DismissButton
+              text={<><AiOutlineCloseCircle/> Dismiss Post</>}
+              onClick={() => dismissPost()}
+            />
+            <CommentLabel text={`${num_comments} comments`} />
           </BlockContainer>
         </PreviewContainer>
         <div onClick={() => setDetails()}>

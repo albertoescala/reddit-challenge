@@ -7,6 +7,7 @@ import {
   SET_POST_VISITED,
   SET_POST_DISMISSED,
   SET_ALL_POSTS_DISMISSED,
+  SET_IS_MENU_OPEN,
 } from './constants';
 
 export function setToken(data) {
@@ -63,5 +64,12 @@ export function setAllPostsDismissed(ids) {
   return {
     type: SET_ALL_POSTS_DISMISSED,
     ids,
+  };
+}
+
+export function setIsMenuOpen(boolean) {
+  return {
+    type: SET_IS_MENU_OPEN,
+    isMenuOpen: boolean,
   };
 }
