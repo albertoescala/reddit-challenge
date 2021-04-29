@@ -29,3 +29,6 @@ To make this challenge even greater, I decided not to use ui libraries like antd
 
 In addition to completing the requirements, I decided to add a small login flow.
 
+## IMPORTANT NOTE
+The login will not work on development. You will need to create a reddit application to get your Client ID and Secret ID.
+
