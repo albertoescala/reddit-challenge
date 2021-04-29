@@ -1,26 +1,29 @@
 import axios from 'axios';
 import { store } from './store';
 import { FETCH_POSTS_FAIL } from './constants';
-import { setPosts, setUser, setToken } from './actions';
+import { setPosts, setUser, setToken, setIsPostLoading} from './actions';
 
 const REDDIT_API = process.env.NEXT_PUBLIC_REDDIT_API;
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
 const SECRET_ID = process.env.NEXT_PUBLIC_SECRET_ID;
 const CALLBACK_URI = process.env.NEXT_PUBLIC_CALLBACK_URI;
 
-export const fetchTopPosts = (nextPageId) => (dispatch) => {
+export const fetchTopPosts = (nextPageId) => async (dispatch) => {
   const redditUrl = `https://www.reddit.com/top.json?limit=10${
     nextPageId ? `&after=${nextPageId}` : ''
   }`;
-
-  axios.get(redditUrl)
-    .then(({ data }) => {
-      return dispatch(setPosts(data));
-    })
-    .catch((err) => dispatch({ type: FETCH_POSTS_FAIL, posts: err }));
+  try {
+    dispatch(setIsPostLoading(true));
+    const { data } = await axios.get(redditUrl);
+    dispatch(setPosts(data))
+  } catch(err) {
+    dispatch({ type: FETCH_POSTS_FAIL, posts: err })
+  } finally {
+    dispatch(setIsPostLoading(false));
+  }
 };
 
-export const getToken = (code) => async (dispatch) => {
+export const getToken = (code) => (dispatch) => {
   return axios
     .post(
       "https://www.reddit.com/api/v1/access_token",
@@ -40,10 +43,10 @@ export const getToken = (code) => async (dispatch) => {
     .then((res) => dispatch(setToken(res.data)));
 };
 
-export const getUser = () => async (dispatch) => {
+export const getUser = () => (dispatch) => {
   const token = store.getState().auth.token;
 
-  return await axios
+  return axios
     .get(`${REDDIT_API}/api/v1/me`, {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -8,7 +8,7 @@ import { Container, ListContainer, StyledButton } from './styles';
 const CardList = ({ isOpen }) => {
   const [cards, setCards] = useState([]);
   const [isDismissed, setIsDismissed] = useState(false);
-  const { postsDismissed, posts = [], hasMorePostsId } = useSelector(
+  const { postsDismissed, posts = [], hasMorePostsId, isPostLoading } = useSelector(
     (state) => state
   );
   const dispatch = useDispatch();
@@ -62,6 +62,7 @@ const CardList = ({ isOpen }) => {
         />
         <StyledButton
           text="Fetch more"
+          disabled={isPostLoading}
           onClick={() => loadMorePosts()}
         />
       </div>

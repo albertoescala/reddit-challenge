@@ -8,6 +8,7 @@ import {
   SET_POST_DISMISSED,
   SET_ALL_POSTS_DISMISSED,
   SET_IS_MENU_OPEN,
+  SET_IS_POST_LOADING,
 } from './constants';
 
 export function setToken(data) {
@@ -71,5 +72,12 @@ export function setIsMenuOpen(boolean) {
   return {
     type: SET_IS_MENU_OPEN,
     isMenuOpen: boolean,
+  };
+}
+
+export function setIsPostLoading(boolean) {
+  return {
+    type: SET_IS_POST_LOADING,
+    isPostLoading: boolean,
   };
 }

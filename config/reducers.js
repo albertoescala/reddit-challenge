@@ -8,6 +8,7 @@ import {
   SET_POST_DISMISSED,
   SET_ALL_POSTS_DISMISSED,
   SET_IS_MENU_OPEN,
+  SET_IS_POST_LOADING,
 } from './constants';
 import { initialState } from './store';
 
@@ -73,7 +74,12 @@ export const reducers = (state = initialState, action) => {
       return {
         ...state,
         isMenuOpen: action.isMenuOpen,
-      }
+      };
+    case SET_IS_POST_LOADING:
+      return {
+        ...state,
+        isPostLoading: action.isPostLoading,
+      };
     default:
       return state;
   }
